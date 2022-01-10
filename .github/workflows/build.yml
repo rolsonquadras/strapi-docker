@@ -24,5 +24,12 @@ jobs:
         run: |
           yarn install
           ./bin/build.js
-          docker tag strapi/strapi:4.0.4-alpine ghcr.io/trustbloc-cicd/strapi:4.0.4-alpine-1
+          VERSION=$(git rev-parse --short=7 HEAD)
+          echo "IMAGE_TAG"=4.0.4-alpine-snapshot-$VERSION >> $GITHUB_ENV
+          docker tag strapi/strapi:4.0.4-alpine ghcr.io/trustbloc-cicd/strapi:$IMAGE_TAG
           docker images
+          # echo $DOCKER_PASSWORD | docker login ghcr.io --username $DOCKER_USER --password-stdin
+          # docker push ghcr.io/trustbloc-cicd/strapi:4.0.4-alpine-1
+        env:
+          DOCKER_USER: ${{ secrets.CR_USER }}
+          DOCKER_PASSWORD: ${{ secrets.CR_PAT }}
