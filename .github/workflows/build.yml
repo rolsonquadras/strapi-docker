@@ -23,10 +23,10 @@ jobs:
       - name: Build image
         run: |
           yarn install
-          ./bin/build.js
           VERSION=$(git rev-parse --short=7 HEAD)
           echo "IMAGE_TAG"=4.0.4-alpine-snapshot-$VERSION
           echo $IMAGE_TAG
+          ./bin/build.js
           docker tag strapi/strapi:4.0.4-alpine ghcr.io/trustbloc-cicd/strapi:$IMAGE_TAG
           docker images
           # echo $DOCKER_PASSWORD | docker login ghcr.io --username $DOCKER_USER --password-stdin
