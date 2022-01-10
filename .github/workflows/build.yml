@@ -24,3 +24,5 @@ jobs:
         run: |
           yarn install
           ./bin/build.js
+          docker tag strapi/strapi:4.0.4-alpine ghcr.io/trustbloc-cicd/strapi:4.0.4-alpine-1
+          docker images
